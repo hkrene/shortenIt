@@ -75,9 +75,25 @@
     <main>
       <div class="container mx-auto">
 
-        <p class="text-lg text-sand-11">
+        <p class="text-4xl font-bold text-primary mb-10 mt-2 text-center">
           Ici sera l'affichage des résultats
         </p>
+      </div>
+      
+      <div class="border border-sand-6 rounded-md p-2 w-1/3 container mx-auto">
+        <p class="text-xl font-bold text-sand-11">
+          Your shortened URL
+        </p> 
+        <a href="{{ shortUrl }}" class="text-primary">
+          {{ shortUrl }}
+        </a>
+
+        <div class="mt-8">
+          <h2 class="text-xl font-bold text-sand-11 ">
+            QR Code
+          </h2>
+          <img src="/qr/{{ code }}" alt="QR Code" />
+        </div>
       </div>
     </main>
     <footer>

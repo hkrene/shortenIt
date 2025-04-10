@@ -1,18 +1,28 @@
 // import type { HttpContext } from '@adonisjs/core/http'
 
+import { nanoid } from 'nanoid'
+
+export const urlMap = new Map<string, string>()
+
 export default class ShortUrlsController {
-  // Affiche la page d'accueil avec le formulaire
   public async index({ view }) {
     return view.render('pages/home')
   }
 
-  // Création d'une URL courte
-  public async create({ request, response }) {
-    // À implémenter
+  public async create({ request, view, response }) {
+    const originalUrl = request.input('url')
+
+    const code = nanoid(6)
+    urlMap.set(code, originalUrl)
+
+    return view.render('pages/result', {
+      shortUrl: `${request.protocol()}://${request.host()}/${code}`,
+      code,
+    })
   }
 
-  // Redirection vers l'URL originale
   public async redirect({ params, response }) {
-    // À implémenter
+    const original = urlMap.get(params.code)
+    return response.redirect(original)
   }
 }
