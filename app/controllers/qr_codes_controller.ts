@@ -2,7 +2,7 @@
 
 
 import QRCode from 'qrcode'
-import { urlMap } from './short_urls_controller.ts' // Import shared map
+import { urlMap } from './short_urls_controller.ts'
 
 export default class QrCodesController {
   public async generate({ params, request, response }) {
@@ -16,3 +16,4 @@ export default class QrCodesController {
     return response.send(qrBuffer)
   }
 }
+
