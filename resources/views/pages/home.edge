@@ -69,13 +69,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  <body class="min-h-screen w-screen font-sans">
+  <body class="min-h-screen w-screen font-sans flex flex-col">
     @!component('components/header')
     <main class="flex-1">
       <div class="container mx-auto mt-4">
         <h1 class="text-4xl font-bold text-primary">
-          Shorten Your Long URL
+          Shorten Your Long URL and Generate a QR Code
         </h1>
+        <p>Instantly generate a short url & a QR Code in seconds.</p>
         {{--  <p class="text-lg text-sand-11">
           Ici sera le formulaire de saisie de l'url
         </p>  --}}
@@ -85,7 +86,7 @@
         {{ csrfField() }}
         <div class="container mx-auto mt-4">
           <h2 class="text-2xl font-bold text-sand-11 mb-2">
-            Enter the URL to be shortened
+            Your URL 
           </h2>
         <div class=" flex  gap-4 container mx-auto mb-4 ">
           <div class="">
@@ -97,7 +98,7 @@
               id="url"
             />
           </div>
-          @!component('components/button', { text: 'Shorten' ,color: 'bg-red-600'})
+          @!component('components/button', { text: 'Shorten' })
         </div>
       </form>
     </main>

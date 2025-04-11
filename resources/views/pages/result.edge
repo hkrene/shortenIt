@@ -69,9 +69,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  <body class="min-h-screen w-screen font-sans">
+  <body class="min-h-screen w-screen font-sans flex flex-col">
     @!component('components/header')
-    <main>
+    <main class="flex-1">
       <div class="container mx-auto">
 
         <p class="text-4xl font-bold text-primary mb-10 mt-2 text-center">
@@ -93,10 +93,10 @@
             QR Code
           </h2>
           <img src="/qr/{{ code }}" alt="QR Code" />
-          @!component('components/button', { text: 'Generate' })
+          @!component('components/button', { text: 'Download QRcode' })
         </div>
       </div>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, voluptas ea. Cupiditate doloribus hic quia eligendi architecto aspernatur assumenda, eos delectus odit est sapiente blanditiis voluptate velit quis provident error.</p>
+      <p class="container mx-auto mt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, voluptas ea. Cupiditate doloribus hic quia eligendi architecto aspernatur assumenda, eos delectus odit est sapiente blanditiis voluptate velit quis provident error.</p>
     </main>
     @!component('components/footer')
   </body>
