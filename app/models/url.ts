@@ -5,6 +5,15 @@ export default class Url extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
+  @column()
+  declare code: string
+
+  @column()
+  declare short_url: string
+
+  @column()
+  declare original_url: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
