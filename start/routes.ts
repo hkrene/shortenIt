@@ -12,7 +12,8 @@ import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
 
 router.get('/', [ShortUrlsController, 'index'])
-router.get('/list', '#resources/views/pages/url_list.submit')
+router.get('/home', '#controllers/short_urls_controller.submit')
+router.get('pages/url_list','#controllers/short_urls_controller.listUrl')
 router.post('/shorten', [ShortUrlsController, 'create'])
 router.get('/:code', [ShortUrlsController, 'redirect'])
 router.get('/qr/:code', [QrCodesController, 'generate'])

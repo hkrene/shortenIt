@@ -23,9 +23,15 @@ export default class ShortUrlsController {
 
     const code = nanoid(6)
     urlMap.set(code, originalUrl)
-
+    const shortUrl = `${request.protocol()}://${request.host()}/${code}`
+    console.log(shortUrl);
     
 
+    const url = await Url.create({
+      code: code,
+      short_url: shortUrl,
+      original_url: originalUrl
+    })
     return view.render('pages/result', {
       shortUrl: `${request.protocol()}://${request.host()}/${code}`,
       code,
@@ -36,4 +42,9 @@ export default class ShortUrlsController {
     const original = urlMap.get(params.code)
     return response.redirect(original)
   }
+
+  public async submit({view}){
+    return view.render('pages/home')
+  }
 }
+
