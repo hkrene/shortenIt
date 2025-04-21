@@ -1,6 +1,7 @@
 // import type { HttpContext } from '@adonisjs/core/http'
 
 import { nanoid } from 'nanoid'
+import Url from '#models/url'
 
 export const urlMap = new Map<string, string>()
 
