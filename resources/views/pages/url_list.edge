@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      AdonisJS - A fully featured web framework for Node.js
+    </title>
+
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css?family=instrument-sans:400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --sand-1: #fdfdfc;
+        --sand-2: #f9f9f8;
+        --sand-3: #f1f0ef;
+        --sand-4: #e9e8e6;
+        --sand-5: #e2e1de;
+        --sand-6: #dad9d6;
+        --sand-7: #cfceca;
+        --sand-8: #bcbbb5;
+        --sand-9: #8d8d86;
+        --sand-10: #82827c;
+        --sand-11: #63635e;
+        --sand-12: #21201c;
+      }
+    </style>
+
+    <script src="https://cdn.tailwindcss.com">
+      
+    </script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [ "Instrument Sans", "sans-serif" ]
+            },
+            colors: {
+              primary: {
+                DEFAULT: "#5A45FF",
+                lighter: "#a599ff"
+              },
+              sand: {
+                1: "var(--sand-1)",
+                2: "var(--sand-2)",
+                3: "var(--sand-3)",
+                4: "var(--sand-4)",
+                5: "var(--sand-5)",
+                6: "var(--sand-6)",
+                7: "var(--sand-7)",
+                8: "var(--sand-8)",
+                9: "var(--sand-9)",
+                10: "var(--sand-10)",
+                11: "var(--sand-11)",
+                12: "var(--sand-12)"
+              }
+            }
+          }
+        }
+      };
+    </script>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('dumper')
+  </head>
+  <body class="min-h-screen w-screen font-sans flex flex-col bg-white text-gray-900">
+    @!component('components/header')
+  
+    <main class="flex-1 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-screen-lg mx-auto mt-4 lg:sticky lg:top-0 bg-white z-10 pb-4">
+        <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-2">
+          All your shorten Urls
+        </h1>
+  
+        <p class="text-base sm:text-lg text-sand-11 mb-4">
+          Instantly edit and delete your urls
+        </p>
+  
+        <a href="/home" class="inline-block bg-primary text-white font-semibold px-4 py-2 rounded-md hover:bg-primary/90 transition">
+          Create Short URL
+        </a>
+      </div>
+  
+      <section class="max-w-screen-lg mx-auto mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @each(list in lists)
+          <div class="border p-4 rounded-lg shadow hover:shadow-md transition bg-sand-2 flex flex-col justify-between">
+            <div>
+              {{--  <p class="font-semibold break-words">Code: {{list.code}}</p>  --}}
+              <p class="text-blue-600 break-all">Short Url: {{list.short_url}}</p>
+              <p class="text-gray-700 break-words mb-4">Original Url: {{list.original_url}}</p>
+            </div>
+  
+            <div class="flex gap-2 mt-auto">
+              <a href="/edit/{{list.original_url}}" class="flex-1 text-center bg-primary text-white px-3 py-2 rounded-md hover:bg-yellow-600 transition text-sm font-medium">
+                Edit
+              </a>
+              <form action="/delete/{{list.original_url}}" method="POST" class="flex-1">
+                <button type="submit" class="w-full bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-700 transition text-sm font-medium">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        @end
+      </section>
+    </main>
+  
+    @!component('components/footer')
+  </body>
+  
+</html>
