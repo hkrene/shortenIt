@@ -7,14 +7,24 @@ export const urlMap = new Map<string, string>()
 
 export default class ShortUrlsController {
   public async index({ view }) {
-    return view.render('pages/home')
+
+    const lists = await Url.all()
+    return view.render('pages/url_list', {lists})
   }
+
+  public async listUrl({view}){
+    const lists = await Url.all()
+    return view.render('pages/url_list', {lists})
+  }
+
 
   public async create({ request, view, response }) {
     const originalUrl = request.input('url')
 
     const code = nanoid(6)
     urlMap.set(code, originalUrl)
+
+    
 
     return view.render('pages/result', {
       shortUrl: `${request.protocol()}://${request.host()}/${code}`,
