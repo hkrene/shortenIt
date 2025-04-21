@@ -69,39 +69,44 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  <body class="min-h-screen w-screen font-sans flex flex-col">
+  <body class="min-h-screen w-screen font-sans flex flex-col bg-sand-1">
     @!component('components/header')
+  
     <main class="flex-1">
-      <div class="container mx-auto mt-4">
-        <h1 class="text-4xl font-bold text-primary">
+      <div class="container mx-auto px-4 mt-4 text-center">
+        <h1 class="text-2xl sm:text-4xl font-bold text-primary">
           Shorten Your Long URL and Generate a QR Code
         </h1>
-        <p>Instantly generate a short url & a QR Code in seconds.</p>
-        {{--  <p class="text-lg text-sand-11">
-          Ici sera le formulaire de saisie de l'url
-        </p>  --}}
+        <p class="mt-2 text-sand-11">
+          Instantly generate a short url & a QR Code in seconds.
+        </p>
       </div>
-
-      <form action="/shorten" method="POST" class="border border-sand-8 rounded-md p-2 w-1/2 h-1/2 mx-auto mt-10 flex">
+  
+      <form 
+        action="/shorten" 
+        method="POST" 
+        class="border border-sand-8 rounded-md p-4 sm:p-6 w-full max-w-2xl mx-auto mt-10"
+      >
         {{ csrfField() }}
-        <div class="container mx-auto mt-4">
-          <h2 class="text-2xl font-bold text-sand-11 mb-2">
-            Your URL 
-          </h2>
-        <div class=" flex  gap-4 container mx-auto mb-4 ">
-          <div class="">
-            {{--  <label for="url" class="text-lg text-sand-11">Paste the URL to be shortened</label>  --}}
-            <input
-            class="border border-sand-6 rounded-md p-2 "
-              type="text"
-              name="url"
-              id="url"
-            />
-          </div>
+  
+        <h2 class="text-xl sm:text-2xl font-bold text-sand-11 mb-4 text-center">
+          Your URL
+        </h2>
+  
+        <div class="flex flex-col md:flex-row gap-4 items-stretch">
+          <input
+            class="flex-1 border border-sand-6 rounded-md p-3 text-base"
+            type="text"
+            name="url"
+            id="url"
+            placeholder="Paste your URL here..."
+          />
           @!component('components/button', { text: 'Shorten' })
         </div>
       </form>
     </main>
+  
     @!component('components/footer')
   </body>
+  
 </html>
