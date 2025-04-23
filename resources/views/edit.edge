@@ -73,7 +73,7 @@
     @!component('components/header')
   
     <h1>Edit URL</h1>
-    <form action="/update/{{ url.original_url }}" method="POST">
+    <form action="/update" method="POST">
       {{ csrfField() }}
       <label for="url">Original URL:</label>
       <input type="url" name="url" id="url" value="{{ url.original_url }}" required />
