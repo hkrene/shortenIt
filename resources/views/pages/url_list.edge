@@ -84,8 +84,6 @@
         <p class="text-base sm:text-lg text-sand-11 mb-2">
           Instantly edit and delete your urls
         </p>
-  
-        
       </div>
   
       <section class="max-w-screen-lg mx-auto mt-2 flex flex-col gap-6">
@@ -97,10 +95,11 @@
             </div>
   
             <div class="flex gap-3 mt-auto">
-              <a href="/edit/{{list.original_url}}" class="bg-primary text-white px-8 py-2 rounded-md hover:bg-yellow-600">
+              <a href="/edit/{{list.id}}" class="bg-primary text-white px-8 py-2 rounded-md hover:bg-yellow-600">
                 Edit
               </a>
-              <form action="/delete/{{list.original_url}}" method="POST" class="flex-1 min-w-[120px]">
+              <form action="/delete/{{list.id}}" method="DELETE" class="flex-1 min-w-[120px]">
+                {{ csrfField() }}
                 <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
                   Delete
                 </button>

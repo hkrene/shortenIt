@@ -46,5 +46,30 @@ export default class ShortUrlsController {
   public async submit({view}){
     return view.render('pages/home')
   }
+  public async delete({params, response}){
+    const url = await Url.findOrFail(params.id)
+    await url.delete()
+
+    return response.redirect().back()
+  }
+
+  public async edit({view, params, request, response}){
+    const url = await Url.findOrFail(params.id)
+    return view.render('pages/edit', {url})
+  }
+
+  public async update({params, request,view, response}){
+    const url = await Url.findOrFail(params.id)
+    
+    url.original_url = request.input('url')
+    await url.save()
+    const lists= await Url.all()
+
+    return view.render('pages/url_list', {lists})
+  }
+
+
+  
+
 }
 
