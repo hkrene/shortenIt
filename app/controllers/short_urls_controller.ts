@@ -9,7 +9,7 @@ export default class ShortUrlsController {
   public async index({ view }) {
 
     const lists = await Url.all()
-    return view.render('pages/login', {lists})
+    return view.render('pages/signin', {lists})
   }
 
   public async listUrl({view}){
