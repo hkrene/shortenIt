@@ -69,48 +69,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  <body class="min-h-screen w-screen font-sans flex flex-col bg-white text-gray-900">
+  <body class="min-h-screen w-screen font-sans flex flex-col bg-sand-1">
     @!component('components/header')
   
-    <main class="flex-1 px-4 sm:px-6 lg:px-8">
-      <a href="/home" class=" flex bg-primary text-white font-semibold px-4 py-2 mt-4 rounded-md hover:bg-primary">
-        Create Short url
-      </a>
-      <div class="max-w-screen-lg mx-auto mt-4 lg:sticky lg:top-0 bg-white z-10 pb-4">
-        <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-2">
-          All your shorten Urls
-        </h1>
-  
-        <p class="text-base sm:text-lg text-sand-11 mb-2">
-          Instantly edit and delete your urls
-        </p>
-  
-        
-      </div>
-  
-      <section class="max-w-screen-lg mx-auto mt-2 flex flex-col gap-6">
-        @each(list in lists)
-          <div class="border p-4 rounded-lg shadow hover:shadow-md transition bg-sand-2 flex flex-col">
-            <div>
-              <a class="text-blue-600 break-all" href="">Short Url: {{list.short_url}}</a>
-              <p class="text-gray-700 break-words mb-4 line-clamp-2">Original Url: {{list.original_url}}</p>
-            </div>
-  
-            <div class="flex gap-3 mt-auto">
-              <a href="/edit/{{list.original_url}}" class="bg-primary text-white px-8 py-2 rounded-md hover:bg-yellow-600">
-                Edit
-              </a>
-              <form action="/delete/{{list.original_url}}" method="POST" class="flex-1 min-w-[120px]">
-                <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
-                  Delete
-                </button>
-              </form>
-            </div>
-          </div>
-        @end
-      </section>
-    </main>
-  
+    <h1>Edit URL</h1>
+    <form action="/update/{{ url.original_url }}" method="POST">
+      {{ csrfField() }}
+      <label for="url">Original URL:</label>
+      <input type="url" name="url" id="url" value="{{ url.original_url }}" required />
+      <button type="submit">Update</button>
+    </form>
     @!component('components/footer')
   </body>
   
