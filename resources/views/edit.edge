@@ -77,7 +77,7 @@
       {{ csrfField() }}
       <label for="url">Original URL:</label>
       <input type="url" name="url" id="url" value="{{ url.original_url }}" required />
-      <button type="submit">Update</button>
+      @!component('components/button', { text: 'Update' })
     </form>
     @!component('components/footer')
   </body>
