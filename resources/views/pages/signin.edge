@@ -69,46 +69,46 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <body class="bg-sand-3 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md md:max-w-lg lg:max-w-xl">
       <h1 class="text-2xl font-bold text-center mb-6 md:text-3xl lg:text-4xl">Create an Account</h1>
       <form action="/signin" method="POST" class="space-y-4">
         {{ csrfField() }}
         <div>
-          <label for="name" class="block text-sm font-medium text-sand-12 md:text-base">Full Name:</label>
+          <label for="name" class="block text-sm font-medium text-sand-12 md:text-base">Full Name</label>
           <input
             type="text"
             id="name"
             name="name"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-sand-6 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-sand-12 md:text-base">Email:</label>
+          <label for="email" class="block text-sm font-medium text-sand-12 md:text-base">Email</label>
           <input
             type="email"
             id="email"
             name="email"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-sand-6 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-sand-12 md:text-base">Password:</label>
+          <label for="password" class="block text-sm font-medium text-sand-12 md:text-base">Password</label>
           <input
             type="password"
             id="password"
             name="password"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-sand-6 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md  text-sm md:text-base"
+            class="w-full bg-primary text-white py-2 px-4 rounded-md  text-sm md:text-base"
           >
             Sign Up
           </button>
@@ -116,7 +116,7 @@
       </form>
       <p class="mt-4 text-center text-sand-10 md:text-base">
         Already have an account?
-        <a href="/login" class="text-indigo-600 hover:underline">Login</a>
+        <a href="/" class="text-primary hover:underline">Login</a>
       </p>
     </div>
   </body>

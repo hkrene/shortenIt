@@ -8,8 +8,11 @@ export const urlMap = new Map<string, string>()
 export default class ShortUrlsController {
   public async index({ view }) {
 
-    const lists = await Url.all()
-    return view.render('pages/signin', {lists})
+    return view.render('pages/login')
+  }
+
+  public async signin({view}){
+    return view.render('pages/signin')
   }
 
   public async listUrl({view}){
