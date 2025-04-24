@@ -75,46 +75,46 @@
       <form action="/signin" method="POST" class="space-y-4">
         {{ csrfField() }}
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700 md:text-base">Full Name:</label>
+          <label for="name" class="block text-sm font-medium text-sand-12 md:text-base">Full Name:</label>
           <input
             type="text"
             id="name"
             name="name"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 md:text-base">Email:</label>
+          <label for="email" class="block text-sm font-medium text-sand-12 md:text-base">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700 md:text-base">Password:</label>
+          <label for="password" class="block text-sm font-medium text-sand-12 md:text-base">Password:</label>
           <input
             type="password"
             id="password"
             name="password"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm md:text-base"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-sm md:text-base"
+            class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md  text-sm md:text-base"
           >
             Sign Up
           </button>
         </div>
       </form>
-      <p class="mt-4 text-center text-sm text-gray-600 md:text-base">
+      <p class="mt-4 text-center text-sand-10 md:text-base">
         Already have an account?
         <a href="/login" class="text-indigo-600 hover:underline">Login</a>
       </p>
