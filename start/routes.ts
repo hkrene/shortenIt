@@ -13,6 +13,7 @@ import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/user_controller'
 
 router.get('/', [ShortUrlsController, 'index'])
+router.get('/login', [UserController, 'createUser'])
 router.get('/signin', [ShortUrlsController, 'signin'])
 router.get('/list', [ShortUrlsController, 'listUrl'])
 router.get('/home', '#controllers/short_urls_controller.submit')
