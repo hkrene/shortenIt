@@ -10,6 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
+import UserController from '#controllers/user_controller'
 
 router.get('/', [ShortUrlsController, 'index'])
 router.get('/signin', [ShortUrlsController, 'signin'])
