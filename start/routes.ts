@@ -10,7 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
-import UserController from '#controllers/user_controller'
+import UserController from '#controllers/register_controller'
 
 router.get('/', [ShortUrlsController, 'index'])
 
@@ -27,7 +27,6 @@ router.group(() => {
   router.get('/delete/:id', '#controllers/short_urls_controller.delete')
   router.get('/edit/:id', '#controllers/short_urls_controller.edit')
   router.post('/update/:id','#controllers/short_urls_controller.update' )
-  
 
 })
 
