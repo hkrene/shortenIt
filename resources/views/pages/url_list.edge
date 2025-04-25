@@ -100,9 +100,10 @@
               </a>
               <form action="/delete/{{list.id}}" method="DELETE" class="flex-1 min-w-[120px]">
                 {{ csrfField() }}
-                <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
+                {{--  <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
                   Delete
-                </button>
+                </button>  --}}
+                @!component('components/button', { text: 'Delete'})
               </form>
             </div>
           </div>
