@@ -27,7 +27,6 @@ router.group(() => {
   router.get('/delete/:id', '#controllers/short_urls_controller.delete')
   router.get('/edit/:id', '#controllers/short_urls_controller.edit')
   router.post('/update/:id','#controllers/short_urls_controller.update' )
-
-})
+}).as('auth')
 
 
