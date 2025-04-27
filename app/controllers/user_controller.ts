@@ -19,12 +19,22 @@ export default class UserController {
     }
 
 
-  public async login({ view, request }: HttpContext) {
+  public async login({ request, response, auth, session }: HttpContext) {
+    try {
       const { email, password } = request.only(['email', 'password'])
-
       const user = await User.verifyCredentials(email, password)
-    return view.render('pages/url_list')
+      await auth.use('web').login(user)
+      session.flash('success', 'Login successful')
+      return response.redirect('/list')
+    } catch (error) {
+      session.flash('notification', {
+        type: 'error',
+        message: error.message || 'An error occurred. Please try again.',
+      })
+      return response.redirect().back()
+    }
   }
+
 
   public async showLoginForm({ view }: HttpContext) {
     return view.render('pages/login')

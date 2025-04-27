@@ -16,11 +16,12 @@ import UserController from '#controllers/user_controller'
 
 router.on('/').render('pages/signin')
 // router.get('/', [ShortUrlsController, 'index'])
-router.post('/login', [UserController, 'login'])
-router.post('/signin', [UserController, 'store'])
 
 router.get('/login', [UserController, 'showLoginForm'])
 router.get('/signin', [UserController, 'showSigninForm'])
+router.post('/loginUser', [UserController, 'login'])
+router.post('/signin', [UserController, 'store'])
+
 
 router.group(() => {
   router.get('/list', [ShortUrlsController, 'listUrl'])

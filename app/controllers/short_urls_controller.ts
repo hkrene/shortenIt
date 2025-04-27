@@ -1,4 +1,4 @@
-// import type { HttpContext } from '@adonisjs/core/http'
+import type { HttpContext } from '@adonisjs/core/http'
 
 import { nanoid } from 'nanoid'
 import Url from '#models/url'
@@ -14,7 +14,7 @@ export default class ShortUrlsController {
 
   
 
-  public async listUrl({view}){
+  public async listUrl({view}:HttpContext){
     const lists = await Url.all()
     return view.render('pages/url_list', {lists})
   }
