@@ -70,34 +70,45 @@
     @stack('dumper')
   </head>
   <body class="min-h-screen w-screen font-sans flex flex-col bg-white text-gray-900">
-    @!component('components/header')
+    {{--  @!component('components/header')  --}}
   
     <main class="flex-1 px-4 sm:px-6 lg:px-8">
-      <a href="/home" class=" flex bg-primary text-white font-semibold px-4 py-2 mt-4 rounded-md hover:bg-primary">
-        Create Short url
-      </a>
-      <form action="/logout" method="POST">
-        {{ csrfField() }}
-        {{--  <button type="submit" class="text-sm text-red-600 hover:underline">Logout</button>  --}}
-        @!component('components/button', { text: 'Logout'})
-      </form>
+      <div class="flex justify-between items-center w-full fixed top-0 left-0 right-0 bg-white z-50 p-4 shadow-md">
+        <form action="/home" method="get" class="flex-shrink-0">
+          {{ csrfField() }}
+          @!component('components/button', { 
+            text: 'Create', 
+            color: 'bg-primary hover:bg-green-500'
+          })
+        </form>
       
-      <div class="max-w-screen-lg mx-auto mt-4 lg:sticky lg:top-0 bg-white z-10 pb-4">
+        <form action="/logout" method="POST" class="flex-shrink-0">
+          {{ csrfField() }}
+          @!component('components/button', { 
+            text: 'Logout', 
+            color: 'bg-red-600 hover:bg-red-700'
+          })
+        </form>
+      </div>
+      
+      <div class="max-w-screen-lg mx-auto mt-28 lg:sticky lg:top-0 bg-white z-10 pb-4 p-4 shadow-md">
         <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-2">
           All your shorten Urls
         </h1>
-  
+      
         <p class="text-base sm:text-lg text-sand-11 mb-2">
           Instantly edit and delete your urls
         </p>
       </div>
+      
   
       <section class="max-w-screen-lg mx-auto mt-2 flex flex-col gap-6">
         @each(list in lists)
           <div class="border p-4 rounded-lg shadow hover:shadow-md transition bg-sand-2 flex flex-col">
             <div>
               <a class="text-blue-600 break-all" href="">Short Url: {{list.short_url}}</a>
-              <p class="text-gray-700 break-words mb-4 line-clamp-2">Original Url: {{list.original_url}}</p>
+              <a class="text-gray-700 break-words mb-4 line-clamp-2" href="">Original Url: {{list.original_url}}</a>
+              {{--  <p class="text-gray-700 break-words mb-4 line-clamp-2">Original Url: {{list.original_url}}</p>  --}}
             </div>
   
             <div class="flex gap-3 mt-auto">
@@ -109,7 +120,7 @@
                 {{--  <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
                   Delete
                 </button>  --}}
-                @!component('components/button', { text: 'Delete'})
+                @!component('components/button', { text: 'Delete', color: 'bg-red-600 hover:bg-red-700' })
               </form>
             </div>
           </div>
@@ -117,7 +128,7 @@
       </section>
     </main>
   
-    @!component('components/footer')
+    {{--  @!component('components/footer')  --}}
   </body>
   
 </html>
