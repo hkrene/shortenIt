@@ -19,8 +19,11 @@ export default class UserController {
     }
 
 
-  public async login({ view }: HttpContext) {
-    return view.render('pages/login')
+  public async login({ view, request }: HttpContext) {
+      const { email, password } = request.only(['email', 'password'])
+
+      const user = await User.verifyCredentials(email, password)
+    return view.render('pages/url_list')
   }
 
   public async showLoginForm({ view }: HttpContext) {
