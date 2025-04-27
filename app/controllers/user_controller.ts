@@ -28,7 +28,8 @@ export default class UserController {
       await auth.use('web').login(user)
       session.flash('success', 'Login successful')
       return response.redirect('/list')
-    } catch (error) {
+    } 
+    catch (error) {
       session.flash('notification', {
         type: 'error',
         message: error.message || 'An error occurred. Please try again.',
