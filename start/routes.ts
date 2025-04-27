@@ -14,10 +14,10 @@ import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/register_controller'
 
-router.on('/').render('pages/login')
+router.on('/').render('pages/signin')
 // router.get('/', [ShortUrlsController, 'index'])
-router.get('/login', [UserController, 'store'])
-router.get('/signin', [ShortUrlsController, 'signin'])
+router.get('/login', [UserController, 'login'])
+router.post('/signin', [UserController, 'store'])
 
 router.group(() => {
   router.get('/list', [ShortUrlsController, 'listUrl'])
@@ -29,6 +29,6 @@ router.group(() => {
   router.get('/delete/:id', '#controllers/short_urls_controller.delete')
   router.get('/edit/:id', '#controllers/short_urls_controller.edit')
   router.post('/update/:id','#controllers/short_urls_controller.update' )
-})
+}) .use(middleware.auth())
 
 

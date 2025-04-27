@@ -2,6 +2,7 @@
 
 import { nanoid } from 'nanoid'
 import Url from '#models/url'
+import { createUrlValidator } from '#validators/url'
 
 export const urlMap = new Map<string, string>()
 
@@ -12,9 +13,7 @@ export default class ShortUrlsController {
     // return view.render('pages/login')
   }
 
-  public async signin({view}){
-    return view.render('pages/signin')
-  }
+  
 
   public async listUrl({view}){
     const lists = await Url.all()
@@ -23,7 +22,7 @@ export default class ShortUrlsController {
 
 
   public async create({ request, view, response }) {
-    const originalUrl = request.input('url')
+    const originalUrl = await request.validateUsing(createUrlValidator)
 
     const code = nanoid(6)
     urlMap.set(code, originalUrl)
