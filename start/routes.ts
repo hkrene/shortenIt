@@ -8,16 +8,18 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
+
 import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/register_controller'
 
-router.get('/', [ShortUrlsController, 'index'])
-
+router.on('/').render('pages/login')
+// router.get('/', [ShortUrlsController, 'index'])
+router.get('/login', [UserController, 'store'])
+router.get('/signin', [ShortUrlsController, 'signin'])
 
 router.group(() => {
-  router.get('/login', [UserController, 'createUser'])
-  router.get('/signin', [ShortUrlsController, 'signin'])
   router.get('/list', [ShortUrlsController, 'listUrl'])
   router.get('/home', '#controllers/short_urls_controller.submit')
   router.get('pages/url_list','#controllers/short_urls_controller.listUrl')
