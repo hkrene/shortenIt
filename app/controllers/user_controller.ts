@@ -43,6 +43,11 @@ export default class UserController {
   public async showSigninForm({ view }: HttpContext) {
     return view.render('pages/signin')
   }
+
+  public async logout({ auth, response }: HttpContext) {
+    await auth.use('web').logout()
+    return response.redirect('/login') 
+  }
   
   
 }
