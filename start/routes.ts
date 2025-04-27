@@ -12,12 +12,15 @@ import { middleware } from './kernel.js'
 
 import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
-import UserController from '#controllers/register_controller'
+import UserController from '#controllers/user_controller'
 
 router.on('/').render('pages/signin')
 // router.get('/', [ShortUrlsController, 'index'])
-router.get('/login', [UserController, 'login'])
+router.post('/login', [UserController, 'login'])
 router.post('/signin', [UserController, 'store'])
+
+router.get('/login', [UserController, 'showLoginForm'])
+router.get('/signin', [UserController, 'showSigninForm'])
 
 router.group(() => {
   router.get('/list', [ShortUrlsController, 'listUrl'])
