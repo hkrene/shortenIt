@@ -21,9 +21,14 @@ router.get('/login', [UserController, 'showLoginForm'])
 router.get('/signin', [UserController, 'showSigninForm'])
 router.post('/loginUser', [UserController, 'login'])
 router.post('/signin', [UserController, 'store'])
+router.get('/forgot', [UserController, 'showForgotForm'])
+router.post('/forgot-password', [UserController, 'forgot'])
 
 
 router.group(() => {
+
+
+
   router.get('/list', [ShortUrlsController, 'listUrl'])
   router.get('/home', '#controllers/short_urls_controller.submit')
   router.get('pages/url_list','#controllers/short_urls_controller.listUrl')

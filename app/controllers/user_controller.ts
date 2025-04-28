@@ -51,5 +51,13 @@ export default class UserController {
     return response.redirect('/login') 
   }
   
+
+  public async showForgotForm({view}:HttpContext){
+    return view.render('pages/forgot_password')
+  }
+  
+  public async forgot({ response, request, auth }:HttpContext){
+    return response.redirect('/login')
+  }
   
 }
