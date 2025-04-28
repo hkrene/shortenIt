@@ -6,6 +6,9 @@ export default class Url extends BaseModel {
   declare id: number
 
   @column()
+  declare user_id: number
+
+  @column()
   declare code: string
 
   @column()

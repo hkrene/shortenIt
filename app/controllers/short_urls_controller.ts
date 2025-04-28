@@ -14,31 +14,34 @@ export default class ShortUrlsController {
 
   
 
-  public async listUrl({view}:HttpContext){
-    const lists = await Url.all()
+  public async listUrl({view, auth}:HttpContext){
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
     return view.render('pages/url_list', {lists})
   }
 
 
-  public async create({ request, view, response }) {
-    const originalUrl = await request.validateUsing(createUrlValidator)
-
+  public async create({ request, view, response, auth }:HttpContext) {
+    const { url } = await request.validateUsing(createUrlValidator)
+  
     const code = nanoid(6)
-    urlMap.set(code, originalUrl)
+    urlMap.set(code, url)
     const shortUrl = `${request.protocol()}://${request.host()}/${code}`
     console.log(shortUrl);
-    
-
-    const url = await Url.create({
+  
+    const users = auth.user
+    const urlEntry = await Url.create({
       code: code,
       short_url: shortUrl,
-      original_url: originalUrl
+      original_url: url,
+      user_id: users?.id
     })
+    
     return view.render('pages/result', {
-      shortUrl: `${request.protocol()}://${request.host()}/${code}`,
+      shortUrl,
       code,
     })
   }
+  
 
   public async redirect({ params, response }) {
     const original = urlMap.get(params.code)

@@ -5,7 +5,15 @@ import User from '#models/user'
 
 export default class UserController {
 
-  public async store({ view, request, response}:HttpContext) {
+  public async showLoginForm({ view }: HttpContext) {
+    return view.render('pages/login')
+  }
+
+  public async showSigninForm({ view }: HttpContext) {
+    return view.render('pages/signin')
+  }
+
+  public async store({ request, response}:HttpContext) {
       const payload = await request.validateUsing(createUserValidator)
       
       const user = await User.create({
@@ -36,15 +44,6 @@ export default class UserController {
       })
       return response.redirect().back()
     }
-  }
-
-
-  public async showLoginForm({ view }: HttpContext) {
-    return view.render('pages/login')
-  }
-
-  public async showSigninForm({ view }: HttpContext) {
-    return view.render('pages/signin')
   }
 
   public async logout({ auth, response }: HttpContext) {
