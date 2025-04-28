@@ -100,18 +100,20 @@
             type="password"
             id="password"
             name="password"
+            placeholder="Past here..."
             required
             class="mt-1 block w-full px-3 py-2 border border-sand-6 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
         
         <div class="flex items-center justify-between">
-          <button
+          {{--  <button
             type="submit"
             class="w-full bg-primary text-white py-2 px-4 rounded-md  text-sm md:text-base"
           >
             Sign Up
-          </button>
+          </button>  --}}
+          @!component('components/button', { text: 'Sign Up' })
         </div>
       </form>
       <p class="mt-4 text-center text-sand-10 md:text-base">

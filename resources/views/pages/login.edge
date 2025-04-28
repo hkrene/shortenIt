@@ -95,13 +95,17 @@
             class="mt-1 block w-full px-3 py-2 border border-sand8 rounded-md shadow-sm sm:text-sm md:text-base"
           />
         </div>
+       
+          <a href="/signin" class="text-indigo-600 hover:underline mt-4">Forgot password</a>
+        
         <div class="flex items-center justify-between">
-          <button
+          {{--  <button
             type="submit"
             class="w-full bg-primary text-white py-2 px-4 rounded-md text-sm md:text-base"
           >
             Login
-          </button>
+          </button>  --}}
+          @!component('components/button', { text: 'Login' })
         </div>
       </form>
       <p class="mt-4 text-center text-sm text-gray-600 md:text-base">
