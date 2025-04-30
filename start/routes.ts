@@ -14,7 +14,7 @@ import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/user_controller'
 
-router.on('/').render('pages/signin')
+router.on('/').render('pages/change_password')
 // router.get('/', [ShortUrlsController, 'index'])
 
 router.get('/login', [UserController, 'showLoginForm'])
@@ -26,9 +26,7 @@ router.post('/forgot-password', [UserController, 'forgot'])
 
 
 router.group(() => {
-
-
-
+  
   router.get('/list', [ShortUrlsController, 'listUrl'])
   router.get('/home', '#controllers/short_urls_controller.submit')
   router.get('pages/url_list','#controllers/short_urls_controller.listUrl')
