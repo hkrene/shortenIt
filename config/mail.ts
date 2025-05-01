@@ -15,7 +15,7 @@ const mailConfig = defineConfig({
   },
 
   replyTo: {
-    address: 'hirwarene6@g,mail.com',
+    address: 'newtonrenesto@gmail.com',
     name: 'shortenIt',
   },
 
