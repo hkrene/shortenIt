@@ -12,7 +12,15 @@ const authConfig = defineConfig({
       }),
     }),
   },
+  tokens: {
+    passwordReset: {
+      provider: 'database',
+      table: 'password_reset_tokens',
+      expires: '2h', // Token expiration time
+    }
+  }
 })
+
 
 export default authConfig
 
