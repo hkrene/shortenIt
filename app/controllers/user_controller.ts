@@ -1,6 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import {createUserValidator} from '#validators/user'
 import User from '#models/user'
+import mail from '@adonisjs/mail/services/main'
 
 
 export default class UserController {
@@ -22,6 +23,15 @@ export default class UserController {
         password: payload.password
       })
       console.log(user);
+
+
+      await mail.sendLater((message) => {
+        message
+          .to(user.email)
+          .from('hirwarene6@gmail.com')
+          .subject('Verify your email address')
+          .htmlView('pages/verify_email', { user })
+      })
 
       return response.redirect('/list')
     }
@@ -61,3 +71,4 @@ export default class UserController {
   }
   
 }
+
