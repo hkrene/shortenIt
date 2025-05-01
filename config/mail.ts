@@ -15,27 +15,19 @@ const mailConfig = defineConfig({
   },
 
   replyTo: {
-    address: 'newtonrenesto@gmail.com',
+    address: 'hirwarene6@gmail.com',
     name: 'shortenIt',
   },
 
 
   mailers: { 
     smtp: transports.smtp({
-      host: env.get('SMTP_HOST', ''),
+      host: env.get('SMTP_HOST',''),
       port: env.get('SMTP_PORT'),
-			/**
-       * Uncomment the auth block if your SMTP
-       * server needs authentication
-       */
-
-      
-
-
        auth: {
         type: 'login',
-        user: env.get('SMTP_USERNAME', ''),
-        pass: env.get('SMTP_PASSWORD', ''),
+        user: env.get('SMTP_USERNAME',''),
+        pass: env.get('SMTP_PASSWORD',''),
       }, 
     }),
 		     

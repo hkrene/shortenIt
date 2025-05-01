@@ -24,13 +24,12 @@ export default class UserController {
       })
       console.log(user);
 
-
-      await mail.sendLater((message) => {
+      await mail.send((message) => {
         message
           .to(user.email)
           .from('hirwarene6@gmail.com')
           .subject('Verify your email address')
-          .htmlView('pages/welcome', { user })
+          .htmlView('pages/signup_mail', { user })
       })
 
       return response.redirect('/list')

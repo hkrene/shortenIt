@@ -14,7 +14,7 @@ import ShortUrlsController from '#controllers/short_urls_controller'
 import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/user_controller'
 
-router.on('/').render('pages/change_password')
+router.on('/').render('pages/login')
 // router.get('/', [ShortUrlsController, 'index'])
 
 router.get('/login', [UserController, 'showLoginForm'])
