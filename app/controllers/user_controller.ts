@@ -30,7 +30,7 @@ export default class UserController {
           .to(user.email)
           .from('hirwarene6@gmail.com')
           .subject('Verify your email address')
-          .htmlView('pages/verify_email', { user })
+          .htmlView('pages/welcome', { user })
       })
 
       return response.redirect('/list')
