@@ -16,7 +16,7 @@ const authConfig = defineConfig({
     passwordReset: {
       provider: 'database',
       table: 'password_reset_tokens',
-      expires: '2h', // Token expiration time
+      expires: '2h', 
     }
   }
 })
