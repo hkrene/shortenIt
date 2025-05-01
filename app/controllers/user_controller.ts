@@ -3,7 +3,6 @@ import {createUserValidator} from '#validators/user'
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
 
-
 export default class UserController {
 
   public async showLoginForm({ view }: HttpContext) {
