@@ -7,8 +7,8 @@ import { createUrlValidator } from '#validators/url'
 export const urlMap = new Map<string, string>()
 
 export default class ShortUrlsController {
-  public async index({ view }) {
-    const lists = await Url.all()
+  public async index({ view, auth }: HttpContext) {
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
     return view.render('pages/url_list', { lists })
   }
 
@@ -63,12 +63,13 @@ export default class ShortUrlsController {
     return view.render('pages/edit', {url})
   }
 
-  public async update({params, request,view, response}){
+  public async update({params, request,view, response, auth}:HttpContext){
     const url = await Url.findOrFail(params.id)
     
     url.original_url = request.input('url')
     await url.save()
-    const lists= await Url.all()
+    // const lists= await Url.all()
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
 
     return view.render('pages/url_list', {lists})
   }

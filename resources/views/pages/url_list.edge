@@ -109,6 +109,8 @@
               <a class="text-blue-600 break-all" href="">Short Url: {{list.short_url}}</a>
               <a class="text-gray-700 break-words mb-4 line-clamp-2" href="">Original Url: {{list.original_url}}</a>
               {{--  <p class="text-gray-700 break-words mb-4 line-clamp-2">Original Url: {{list.original_url}}</p>  --}}
+
+              <img src="/qr/{{ code }}" alt="QR Code" class="mx-auto max-w-full h-auto" />
             </div>
   
             <div class="flex gap-3 mt-auto">
@@ -120,6 +122,7 @@
                 {{--  <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
                   Delete
                 </button>  --}}
+                
                 @!component('components/button', { text: 'Delete', color: 'bg-red-600 hover:bg-red-700' })
               </form>
             </div>
