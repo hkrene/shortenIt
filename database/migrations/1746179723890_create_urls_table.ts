@@ -5,8 +5,11 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.integer('user_id')
+      table.string('qrCode')
     })
   }
 
+  async down() {
+    this.schema.dropTable(this.tableName)
+  }
 }
