@@ -18,7 +18,7 @@ export default class Url extends BaseModel {
   declare original_url: string
 
   @column()
-  declare qrCode: string
+  declare qr_code: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

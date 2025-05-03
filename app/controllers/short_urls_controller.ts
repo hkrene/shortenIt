@@ -3,6 +3,8 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { nanoid } from 'nanoid'
 import Url from '#models/url'
 import { createUrlValidator } from '#validators/url'
+import QRCode from 'qrcode'
+
 
 export const urlMap = new Map<string, string>()
 
@@ -20,28 +22,34 @@ export default class ShortUrlsController {
   }
 
 
-  public async create({ request, view, response, auth }:HttpContext) {
+  public async create({ request, view, response, auth, params }:HttpContext) {
     const { url } = await request.validateUsing(createUrlValidator)
   
     const code = nanoid(6)
     urlMap.set(code, url)
     const shortUrl = `${request.protocol()}://${request.host()}/${code}`
     console.log(shortUrl);
+
+    const qrCode = await QRCode.toDataURL(shortUrl)
+    // console.log(qrCode);
+    
   
     const users = auth.user
     const urlEntry = await Url.create({
       code: code,
       short_url: shortUrl,
       original_url: url,
+      qr_code: qrCode,
       user_id: users?.id
     })
     
     return view.render('pages/result', {
       shortUrl,
       code,
+      qrCode: qrCode,
     })
   }
-  
+
 
   public async redirect({ params, response }) {
     const original = urlMap.get(params.code)
@@ -73,6 +81,9 @@ export default class ShortUrlsController {
 
     return view.render('pages/url_list', {lists})
   }
+
+
+
 
 }
 
