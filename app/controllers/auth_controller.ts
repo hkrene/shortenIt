@@ -1,18 +1,17 @@
 // app/controllers/auth_controller.ts
 import { HttpContext } from '@adonisjs/core/http'
-import { createUserValidator } from '#validators/user' // Keep this if needed for registration
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
-import Auth from '@adonisjs/auth/main'
-import { resetPasswordValidator } from '#validators/auth' // We'll create this next
+// import Auth from '@adonisjs/auth/main'
+// import { resetPasswordValidator } from '#validators/auth'
 
 export default class AuthController {
-  // Forgot Password Form
+  // Show forgot password form
   async showForgotPasswordForm({ view }: HttpContext) {
     return view.render('auth/forgot_password')
   }
 
-  // Send Password Reset Email
+  // Handle forgot password submission
   async sendResetLink({ request, response, session }: HttpContext) {
     const email = request.input('email')
     const user = await User.findBy('email', email)
@@ -35,15 +34,15 @@ export default class AuthController {
     return response.redirect().back()
   }
 
-  // Reset Password Form
+  // Show reset password form
   async showResetForm({ view, params }: HttpContext) {
     return view.render('auth/reset_password', { token: params.token })
   }
 
-  // Handle Password Reset
-  async resetPassword({ request, response, session }: HttpContext) {
+  // Handle password reset submission
+  async resetPassword({ request, response, session, auth }: HttpContext) {
     const data = await request.validateUsing(resetPasswordValidator)
-    
+
     try {
       const user = await Auth.verifyPasswordResetToken(data.token)
       

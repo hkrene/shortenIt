@@ -13,7 +13,7 @@ import { middleware } from './kernel.js'
 import ShortUrlsController from '#controllers/short_urls_controller'
 // import QrCodesController from '#controllers/qr_codes_controller'
 import UserController from '#controllers/user_controller'
-// import AuthController from '#controllers/auth_controller'
+import AuthController from '#controllers/auth_controller'
 
 router.on('/').render('pages/login')
 // router.get('/', [ShortUrlsController, 'index'])
@@ -26,10 +26,10 @@ router.get('/forgot', [UserController, 'showForgotForm'])
 router.post('/forgot-password', [UserController, 'forgot'])
 
 
-// router.get('/forgot-password', [AuthController, 'showForgotPasswordForm'])
+router.get('/forgot-password', [AuthController, 'showForgotPasswordForm'])
 // router.post('/forgot-password', [AuthController, 'sendResetLink'])
-// router.get('/reset-password/:token', [AuthController, 'showResetForm'])
-// router.post('/reset-password', [AuthController, 'resetPassword'])
+router.get('/reset-password/:token', [AuthController, 'showResetForm'])
+router.post('/reset-password', [AuthController, 'resetPassword'])
 
 
 router.group(() => {
