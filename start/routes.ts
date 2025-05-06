@@ -24,13 +24,12 @@ router.get('/signin', [UserController, 'showSigninForm'])
 router.post('/loginUser', [UserController, 'login'])
 router.post('/signin', [UserController, 'store'])
 router.get('/forgot', [UserController, 'showForgotForm'])
-router.post('/forgot-password', [UserController, 'forgot'])
+// router.post('/forgot-password', [UserController, 'forgot'])
 
+router.post('/forgot-password', [AuthController, 'forgotPassword'])
+router.get('/reset-password', [AuthController, 'showResetForm'])
+router.post('/reset-password', [AuthController, 'resetPassword'])
 
-router.get('/forgot-passcode', [AuthController, 'showForgotPasswordForm'])
-// router.post('/forgot-passcode', [AuthController, 'sendResetLink'])
-// router.get('/reset-password/:token', [AuthController, 'showResetForm'])
-// router.post('/reset-password', [AuthController, 'resetPassword'])
 
 
 

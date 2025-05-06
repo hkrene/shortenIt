@@ -26,7 +26,7 @@ export default class UserController {
       await mail.send((message) => {
         message
           .to(user.email)
-          .from('hirwarene6@gmail.com')
+          .from('shortenitapp@gmail.com')
           .subject('Verify your email address')
           .htmlView('pages/signup_mail', { user })
       })

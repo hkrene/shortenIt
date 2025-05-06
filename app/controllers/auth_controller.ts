@@ -1,65 +1,72 @@
-// app/controllers/auth_controller.ts
 import { HttpContext } from '@adonisjs/core/http'
+import { randomBytes } from 'node:crypto'
+import { DateTime } from 'luxon'
 import User from '#models/user'
+import PasswordResetToken from '#models/password_reset_token'
+import { forgotPasswordValidator } from '#validators/forgot_password'
+import { resetPasswordValidator } from '#validators/reset_password'
 import mail from '@adonisjs/mail/services/main'
-// import Auth from '@adonisjs/auth/main'
-// import { resetPasswordValidator } from '#validators/auth'
 
 export default class AuthController {
-  // Show forgot password form
-  async showForgotPasswordForm({ view }: HttpContext) {
-    return view.render('auth/forgot_password')
-  }
+  async forgotPassword({ request, response }) {
+    const { email } = await request.validateUsing(forgotPasswordValidator)
 
-  // Handle forgot password submission
-  async sendResetLink({ request, response, session }: HttpContext) {
-    const email = request.input('email')
     const user = await User.findBy('email', email)
+    if (!user) return response.badRequest({ message: 'Utilisateur non trouvé.' })
 
-    if (user) {
-      const { token } = await Auth.generatePasswordResetToken(user)
-      
-      await mail.send((message) => {
-        message
-          .from('no-reply@example.com')
-          .to(user.email)
-          .subject('Password Reset Request')
-          .htmlView('emails/password_reset', {
-            resetUrl: `/reset-password/${token}`
-          })
-      })
-    }
+    const token = randomBytes(32).toString('hex')
+    const expiresAt = DateTime.now().plus({ hours: 2 })
 
-    session.flash('success', 'If the email exists, a reset link has been sent')
-    return response.redirect().back()
+    await PasswordResetToken.query().where('email', email).delete()
+
+    await PasswordResetToken.create({ email, token, expiresAt })
+
+    const resetLink = `${request.protocol()}://${request.host()}/reset-password?token=${token}&email=${email}`
+
+    await mail.send((message) => {
+      message
+        .to(email)
+        .from('shortenitapp@gmail.com')
+        .subject('Réinitialisation de mot de passe')
+        .html(`
+          <p>Bonjour,</p>
+          <p>Pour réinitialiser votre mot de passe, cliquez sur ce lien :</p>
+          <a href="${resetLink}">${resetLink}</a>
+          <p>Ce lien expirera dans 2 heures.</p>
+        `)
+    })
+
+    return response.ok({ message: 'Lien de réinitialisation envoyé.' })
   }
 
-  // Show reset password form
-  async showResetForm({ view, params }: HttpContext) {
-    return view.render('auth/reset_password', { token: params.token })
-  }
-
-  // Handle password reset submission
-  async resetPassword({ request, response, session }: HttpContext) {
-    const data = await request.validateUsing(resetPasswordValidator)
-
-    try {
-      const user = await Auth.verifyPasswordResetToken(data.token)
-      
-      if (user.email !== data.email) {
-        throw new Error('Email mismatch')
-      }
-
-      user.password = data.password
-      await user.save()
-
-      await Auth.invalidatePasswordResetToken(data.token)
-
-      session.flash('success', 'Password reset successfully!')
-      return response.redirect().toRoute('login')
-    } catch (error) {
-      session.flash('error', 'Invalid or expired reset token')
-      return response.redirect().back()
+  public async showResetForm({view}:HttpContext){
+      return view.render('pages/change_password')
     }
+    
+
+  async resetPassword({ request, response }) {
+    const { email, token, password } = await request.validateUsing(resetPasswordValidator)
+
+    const reset = await PasswordResetToken
+      .query()
+      .where('email', email)
+      .andWhere('token', token)
+      .first()
+      console.log(reset);
+      
+
+    if (!reset || reset.expiresAt < DateTime.now()) {
+      return response.badRequest({ message: 'Token invalide ou expiré.' })
+    }
+
+    const user = await User.findBy('email', email)
+    if (!user) return response.badRequest({ message: 'Utilisateur non trouvé.' })
+
+    user.password = password
+    await user.save()
+
+    await reset.delete()
+
+    return response.ok({ message: 'Mot de passe réinitialisé avec succès.' })
   }
 }
