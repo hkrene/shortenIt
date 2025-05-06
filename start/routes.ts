@@ -27,10 +27,10 @@ router.get('/forgot', [UserController, 'showForgotForm'])
 router.post('/forgot-password', [UserController, 'forgot'])
 
 
-router.get('/forgot-password', [AuthController, 'showForgotPasswordForm'])
-router.post('/forgot-passcode', [AuthController, 'sendResetLink'])
-router.get('/reset-password/:token', [AuthController, 'showResetForm'])
-router.post('/reset-password', [AuthController, 'resetPassword'])
+router.get('/forgot-passcode', [AuthController, 'showForgotPasswordForm'])
+// router.post('/forgot-passcode', [AuthController, 'sendResetLink'])
+// router.get('/reset-password/:token', [AuthController, 'showResetForm'])
+// router.post('/reset-password', [AuthController, 'resetPassword'])
 
 
 
