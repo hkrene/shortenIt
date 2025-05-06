@@ -2,8 +2,8 @@
 import { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
-import Auth from '@adonisjs/auth/main'
-import { resetPasswordValidator } from '#validators/auth'
+// import Auth from '@adonisjs/auth/main'
+// import { resetPasswordValidator } from '#validators/auth'
 
 export default class AuthController {
   // Show forgot password form
