@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      Login
-    </title>
+    <title>Connexion</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link
-      href="https://fonts.bunny.net/css?family=instrument-sans:400,400i,500,500i,600,600i,700,700i"
+      href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700"
       rel="stylesheet"
     />
 
@@ -30,16 +28,14 @@
       }
     </style>
 
-    <script src="https://cdn.tailwindcss.com">
-      
-    </script>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
-              sans: [ "Instrument Sans", "sans-serif" ]
+              sans: ['Instrument Sans', 'sans-serif'],
             },
             colors: {
               primary: {
@@ -66,51 +62,84 @@
       };
     </script>
 
+    <script>
+      // Init theme from localStorage
+      if (
+        localStorage.getItem('theme') === 'dark' ||
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+
+      function toggleTheme() {
+        const html = document.documentElement;
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      }
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('dumper')
   </head>
-  
-  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md md:max-w-lg lg:max-w-xl">
-      <h1 class="text-2xl font-bold text-center mb-6 md:text-3xl lg:text-4xl">Welcome back</h1>
-      <form action="/loginUser" method="POST" class="space-y-4">
+
+  <body class="bg-sand-2 dark:bg-gray-900 flex items-center justify-center min-h-screen font-sans">
+    <div class="absolute top-4 right-4">
+      <button onclick="toggleTheme()" class="bg-sand-3 dark:bg-gray-700 text-sand-12 dark:text-white rounded-full p-2 shadow hover:scale-105 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zM15.66 4.34a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.66 15.66a1 1 0 00-1.41 0l-.71.71a1 1 0 101.41 1.41l.71-.71a1 1 0 000-1.41zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM4.34 15.66a1 1 0 00-1.41 1.41l.71.71a1 1 0 001.41-1.41l-.71-.71zM3 10a1 1 0 010-2H2a1 1 0 100 2h1zM4.34 4.34a1 1 0 011.41 0l.71.71a1 1 0 11-1.41 1.41l-.71-.71a1 1 0 010-1.41z" />
+          <path d="M10 5a5 5 0 100 10A5 5 0 0010 5z" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg w-full max-w-md">
+      <h1 class="text-2xl md:text-3xl font-bold text-center text-sand-12 dark:text-white mb-6">
+        Connexion à QRLink
+      </h1>
+
+      <form action="/loginUser" method="POST" class="space-y-5">
         {{ csrfField() }}
+
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 md:text-base">Email</label>
+          <label for="email" class="block text-sm md:text-base font-medium text-sand-11 dark:text-sand-4 mb-1">
+            Adresse e-mail
+          </label>
           <input
             type="email"
             id="email"
             name="email"
             required
-            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm sm:text-sm md:text-base"
+            class="block w-full px-4 py-2 border border-sand-6 dark:border-sand-8 rounded-md shadow-sm text-sm md:text-base bg-white dark:bg-sand-3 text-sand-12 dark:text-sand-12 focus:ring-2 focus:ring-primary"
           />
         </div>
+
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-700 md:text-base">Password</label>
+          <label for="password" class="block text-sm md:text-base font-medium text-sand-11 dark:text-sand-4 mb-1">
+            Mot de passe
+          </label>
           <input
             type="password"
             id="password"
             name="password"
             required
-            class="mt-1 block w-full px-3 py-2 border border-sand8 rounded-md shadow-sm sm:text-sm md:text-base"
+            class="block w-full px-4 py-2 border border-sand-6 dark:border-sand-8 rounded-md shadow-sm text-sm md:text-base bg-white dark:bg-sand-3 text-sand-12 dark:text-sand-12 focus:ring-2 focus:ring-primary"
           />
         </div>
-       
-          <a href="/forgot" class="text-indigo-600 hover:underline mt-4">Forgot password</a>
-        
-        <div class="flex items-center justify-between">
-          {{--  <button
-            type="submit"
-            class="w-full bg-primary text-white py-2 px-4 rounded-md text-sm md:text-base"
-          >
-            Login
-          </button>  --}}
-          @!component('components/button', { text: 'Login' })
+
+        <div class="flex justify-end">
+          <a href="/forgot" class="text-sm text-primary hover:underline">Mot de passe oublié ?</a>
+        </div>
+
+        <div>
+          @!component('components/button', { text: 'Se connecter' })
         </div>
       </form>
-      <p class="mt-4 text-center text-sm text-gray-600 md:text-base">
-        Don't have an account?
-        <a href="/signin" class="text-indigo-600 hover:underline">Sign Up</a>
+
+      <p class="mt-6 text-center text-sm text-sand-10 dark:text-sand-6">
+        Pas encore de compte ?
+        <a href="/signin" class="text-primary hover:underline">Créer un compte</a>
       </p>
     </div>
   </body>
