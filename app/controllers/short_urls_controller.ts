@@ -6,54 +6,47 @@ import { createUrlValidator } from '#validators/url'
 import QRCode from 'qrcode'
 
 
-export const urlMap = new Map<string, string>()
-
 export default class ShortUrlsController {
   public async index({ view, auth }: HttpContext) {
     const lists = await Url.findManyBy('user_id', auth.user?.id)
     return view.render('pages/url_list', { lists })
   }
 
-  
-
-  public async listUrl({view, auth}:HttpContext){
+  public async listUrl({ view, auth }: HttpContext) {
     const lists = await Url.findManyBy('user_id', auth.user?.id)
-    return view.render('pages/url_list', {lists})
+    return view.render('pages/url_list', { lists })
   }
 
-
-  public async create({ request, view, response, auth, params }:HttpContext) {
+  public async create({ request, view, auth }: HttpContext) {
     const { url } = await request.validateUsing(createUrlValidator)
-  
-    const code = nanoid(6)
-    urlMap.set(code, url)
-    const shortUrl = `${request.protocol()}://${request.host()}/${code}`
-    console.log(shortUrl);
 
+    const code = nanoid(6)
+    const shortUrl = `${request.protocol()}://${request.host()}/${code}`
     const qrCode = await QRCode.toDataURL(shortUrl)
-    // console.log(qrCode);
-    
-  
-    const users = auth.user
-    const urlEntry = await Url.create({
-      code: code,
+
+    const user = auth.user
+
+    await Url.create({
+      code,
       short_url: shortUrl,
       original_url: url,
       qr_code: qrCode,
-      user_id: users?.id
+      user_id: user?.id,
     })
-    
+
     return view.render('pages/result', {
       shortUrl,
       code,
-      qrCode: qrCode,
+      qrCode,
     })
   }
 
-
   public async redirect({ params, response }) {
-    const original = urlMap.get(params.code)
-    return response.redirect(original)
+    const record = await Url.findBy('code', params.code)
+    // console.log(record);
+    
+
+    return response.redirect(record.original_url)
   }
 
   public async submit({view}){

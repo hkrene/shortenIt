@@ -64,7 +64,7 @@ export default class UserController {
     return view.render('pages/forgot_password')
   }
   
-  public async forgot({ response, request, auth }:HttpContext){
+  public async forgot({ response }:HttpContext){
     return response.redirect('/login')
   }
   
