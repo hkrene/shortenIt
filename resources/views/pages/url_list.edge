@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      AdonisJS - A fully featured web framework for Node.js
-    </title>
+    <title>AdonisJS - A fully featured web framework for Node.js</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link
@@ -30,21 +28,20 @@
       }
     </style>
 
-    <script src="https://cdn.tailwindcss.com">
-      
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
       tailwind.config = {
+        darkMode: "class",
         theme: {
           extend: {
             fontFamily: {
-              sans: [ "Instrument Sans", "sans-serif" ]
+              sans: ["Instrument Sans", "sans-serif"],
             },
             colors: {
               primary: {
                 DEFAULT: "#5A45FF",
-                lighter: "#a599ff"
+                lighter: "#a599ff",
               },
               sand: {
                 1: "var(--sand-1)",
@@ -58,71 +55,88 @@
                 9: "var(--sand-9)",
                 10: "var(--sand-10)",
                 11: "var(--sand-11)",
-                12: "var(--sand-12)"
-              }
-            }
-          }
-        }
+                12: "var(--sand-12)",
+              },
+            },
+          },
+        },
       };
-    </script>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('dumper')
+      if (
+        localStorage.getItem("theme") === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      function toggleTheme() {
+        const html = document.documentElement;
+        html.classList.toggle("dark");
+        localStorage.setItem(
+          "theme",
+          html.classList.contains("dark") ? "dark" : "light"
+        );
+      }
+    </script>
   </head>
-  <body class="min-h-screen w-screen font-sans flex flex-col bg-white text-gray-900">
-    {{--  @!component('components/header')  --}}
-  
+  <body class="min-h-screen w-screen font-sans flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    {{--  <div class="absolute top-4 right-4">
+     
+    </div>  --}}
+    <div class="flex justify-between items-center w-full fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 z-50 p-4 shadow-md">
+      <form action="/home" method="get" class="flex-shrink-0">
+        {{ csrfField() }}
+        @!component('components/button', { 
+          text: 'Create', 
+          color: 'bg-primary hover:bg-green-500'
+        })
+      </form>
+    
+      <form action="/logout" method="POST" class="flex-shrink-0">
+        {{ csrfField() }}
+        @!component('components/button', { 
+          text: 'Logout', 
+          color: 'bg-red-600 hover:bg-red-700'
+        })
+      </form>
+
+      <button onclick="toggleTheme()" class="bg-sand-3 dark:bg-gray-700 text-sand-12 dark:text-white rounded-full p-2 shadow hover:scale-105 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zM15.66 4.34a1 1 0 010 1.41l-.71.71a1 1 0 01-1.41-1.41l.71-.71a1 1 0 011.41 0zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM15.66 15.66a1 1 0 00-1.41 0l-.71.71a1 1 0 101.41 1.41l.71-.71a1 1 0 000-1.41zM10 18a1 1 0 01-1-1v-1a1 1 0 112 0v1a1 1 0 01-1 1zM4.34 15.66a1 1 0 00-1.41 1.41l.71.71a1 1 0 001.41-1.41l-.71-.71zM3 10a1 1 0 010-2H2a1 1 0 100 2h1zM4.34 4.34a1 1 0 011.41 0l.71.71a1 1 0 11-1.41 1.41l-.71-.71a1 1 0 010-1.41z" />
+          <path d="M10 5a5 5 0 100 10A5 5 0 0010 5z" />
+        </svg>
+      </button>
+    </div>
+
     <main class="flex-1 px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center w-full fixed top-0 left-0 right-0 bg-white z-50 p-4 shadow-md">
-        <form action="/home" method="get" class="flex-shrink-0">
-          {{ csrfField() }}
-          @!component('components/button', { 
-            text: 'Create', 
-            color: 'bg-primary hover:bg-green-500'
-          })
-        </form>
-      
-        <form action="/logout" method="POST" class="flex-shrink-0">
-          {{ csrfField() }}
-          @!component('components/button', { 
-            text: 'Logout', 
-            color: 'bg-red-600 hover:bg-red-700'
-          })
-        </form>
-      </div>
-      
-      <div class="max-w-screen-lg mx-auto mt-28 lg:sticky lg:top-0 bg-white z-10 pb-4 p-4 shadow-md">
+      <div class="max-w-screen-lg mx-auto mt-28 lg:sticky lg:top-0 bg-white dark:bg-gray-800 z-10 pb-4 p-4 shadow-md">
         <h1 class="text-3xl sm:text-4xl font-bold text-primary mb-2">
           All your shorten Urls
         </h1>
       
-        <p class="text-base sm:text-lg text-sand-11 mb-2">
+        <p class="text-base sm:text-lg text-sand-11 dark:text-sand-4 mb-2">
           Instantly edit and delete your urls
         </p>
       </div>
-      
-  
+    
       <section class="max-w-screen-lg mx-auto mt-2 flex flex-col gap-6">
         @each(list in lists)
-          <div class="border p-4 rounded-lg shadow hover:shadow-md transition bg-sand-2 flex flex-col">
+          <div class="border p-4 rounded-lg shadow hover:shadow-md transition bg-sand-2 dark:bg-gray-800 flex flex-col">
             <div>
-              <a class="text-blue-600 break-all" href="">Short Url: {{list.short_url}}</a>
-              <a class="text-gray-700 break-words mb-4 line-clamp-2" href="">Original Url: {{list.original_url}}</a>
-              {{--  <p class="text-gray-700 break-words mb-4 line-clamp-2">Original Url: {{list.original_url}}</p>  --}}
-
-              <img src="{{ list.qr_code }}" alt="QR Code" class="mx-auto max-w-full h-auto" />
+              <a class="text-blue-600 dark:text-blue-400 break-all" href="">Short Url: {{list.short_url}}</a>
+              <a class="text-gray-700 dark:text-gray-300 break-words mb-4 line-clamp-2" href="">Original Url: {{list.original_url}}</a>
+              <img src="{{ list.qr_code }}" alt="QR Code" class="mx-auto max-w-full h-auto rounded-lg mb-4" />
             </div>
-  
+
             <div class="flex gap-3 mt-auto">
               <a href="/edit/{{list.id}}" class="bg-primary text-white px-8 py-2 rounded-md hover:bg-yellow-600">
                 Edit
               </a>
               <form action="/delete/{{list.id}}" method="DELETE" class="flex-1 min-w-[120px]">
                 {{ csrfField() }}
-                {{--  <button type="submit" class="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 ">
-                  Delete
-                </button>  --}}
-                
                 @!component('components/button', { text: 'Delete', color: 'bg-red-600 hover:bg-red-700' })
               </form>
             </div>
@@ -130,8 +144,5 @@
         @end
       </section>
     </main>
-  
-    {{--  @!component('components/footer')  --}}
   </body>
-  
 </html>

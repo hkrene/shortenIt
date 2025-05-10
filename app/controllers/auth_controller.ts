@@ -45,28 +45,6 @@ export default class AuthController {
     
 
   async resetPassword({ request, response }) {
-    const { email, token, password } = await request.validateUsing(resetPasswordValidator)
-
-    const reset = await PasswordResetToken
-      .query()
-      .where('email', email)
-      .andWhere('token', token)
-      .first()
-      console.log(reset);
-      
-
-    if (!reset || reset.expiresAt < DateTime.now()) {
-      return response.badRequest({ message: 'Token invalide ou expiré.' })
-    }
-
-    const user = await User.findBy('email', email)
-    if (!user) return response.badRequest({ message: 'Utilisateur non trouvé.' })
-
-    user.password = password
-    await user.save()
-
-    await reset.delete()
-
-    return response.ok({ message: 'Mot de passe réinitialisé avec succès.' })
+    
   }
 }
