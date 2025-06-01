@@ -1,4 +1,4 @@
-import type { HttpContext } from '@adonisjs/core/http'
+/**import type { HttpContext } from '@adonisjs/core/http'
 
 import { nanoid } from 'nanoid'
 import Url from '#models/url'
@@ -75,8 +75,89 @@ export default class ShortUrlsController {
     return view.render('pages/url_list', {lists})
   }
 
+}**/
 
 
+import type { HttpContext } from '@adonisjs/core/http'
 
+import { nanoid } from 'nanoid'
+import Url from '#models/url'
+import { createUrlValidator } from '#validators/url'
+import QRCode from 'qrcode'
+
+export default class ShortUrlsController {
+  public async index({ auth, response }: HttpContext) {
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
+    return response.json({ success: true, data: lists })
+  }
+
+  public async listUrl({ auth, response }: HttpContext) {
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
+    return response.json({ success: true, data: lists })
+  }
+
+  public async create({ request, auth, response }: HttpContext) {
+    const { url } = await request.validateUsing(createUrlValidator)
+
+    const code = nanoid(6)
+    const shortUrl = `${request.protocol()}://${request.host()}/${code}`
+    const qrCode = await QRCode.toDataURL(shortUrl)
+
+    const user = auth.user
+
+    const newUrl = await Url.create({
+      code,
+      short_url: shortUrl,
+      original_url: url,
+      qr_code: qrCode,
+      user_id: user?.id,
+    })
+
+    return response.json({
+      success: true,
+      data: {
+        shortUrl,
+        code,
+        qrCode,
+        originalUrl: newUrl.original_url,
+      },
+    })
+  }
+
+  public async redirect({ params, response }: HttpContext) {
+    const record = await Url.findBy('code', params.code)
+
+    if (!record) {
+      return response.status(404).json({ success: false, message: 'URL not found' })
+    }
+
+    return response.json({ success: true, data: { originalUrl: record.original_url } })
+  }
+
+  public async submit({ response }: HttpContext) {
+    return response.json({ success: true, message: 'Submit endpoint reached' })
+  }
+
+  public async delete({ params, response }: HttpContext) {
+    const url = await Url.findOrFail(params.id)
+    await url.delete()
+
+    return response.json({ success: true, message: 'URL deleted successfully' })
+  }
+
+  public async edit({ params, response }: HttpContext) {
+    const url = await Url.findOrFail(params.id)
+    return response.json({ success: true, data: url })
+  }
+
+  public async update({ params, request, auth, response }: HttpContext) {
+    const url = await Url.findOrFail(params.id)
+
+    url.original_url = request.input('url')
+    await url.save()
+
+    const lists = await Url.findManyBy('user_id', auth.user?.id)
+
+    return response.json({ success: true, data: lists })
+  }
 }
-
