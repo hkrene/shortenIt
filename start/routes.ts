@@ -7,7 +7,7 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
+/**import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 import ShortUrlsController from '#controllers/short_urls_controller'
@@ -46,6 +46,30 @@ router.group(() => {
   router.get('/edit/:id', '#controllers/short_urls_controller.edit')
   router.post('/update/:id','#controllers/short_urls_controller.update' )
   router.post('/logout', [UserController, 'logout'])
-}) .use(middleware.auth())
+}) .use(middleware.auth())**/
 
 
+
+import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
+
+import ShortUrlsController from '#controllers/short_urls_controller'
+import UserController from '#controllers/user_controller'
+import AuthController from '#controllers/auth_controller'
+
+// Public routes
+router.post('/signin', [UserController, 'store']) 
+router.post('/login', [UserController, 'login']) 
+router.post('/forgot-password', [AuthController, 'forgotPassword']) 
+router.post('/reset-password', [AuthController, 'resetPassword']) 
+
+// Protected routes (require authentication)
+router.group(() => {
+  router.get('/list', [ShortUrlsController, 'listUrl']) 
+  router.post('/shorten', [ShortUrlsController, 'create']) 
+  router.get('/:code', [ShortUrlsController, 'redirect']) 
+  router.delete('/delete/:id', [ShortUrlsController, 'delete']) 
+  router.get('/edit/:id', [ShortUrlsController, 'edit']) 
+  router.put('/update/:id', [ShortUrlsController, 'update'])
+  router.post('/logout', [UserController, 'logout']) 
+}).use(middleware.auth()) 
